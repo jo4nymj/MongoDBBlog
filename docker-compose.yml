@@ -1,0 +1,32 @@
+# Use root/example as user/password credentials
+version: '3.1'
+
+services:
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - 27017:27017
+    # environment:
+      # MONGO_INITDB_DATABASE: blog
+      # MONGO_INITDB_ROOT_USERNAME: root
+      # MONGO_INITDB_ROOT_PASSWORD: example
+    volumes:
+      - tmp:/tmp
+      - data:/data
+      # - ./init-mongo.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+
+  php:
+    container_name: frontPHP
+    image: ualmtorres/phalcon-apache-ubuntu
+    restart: always
+    ports:
+      - 8081:80
+    volumes:
+      - html:/var/www/html
+
+volumes:
+  tmp:
+  data:
+  html:
+
